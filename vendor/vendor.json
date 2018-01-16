@@ -1,0 +1,73 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "0x6tKraaJRo//YVEB2FotP2Mhww=",
+			"path": "github.com/go-kit/kit/endpoint",
+			"revision": "953e747656a7bbb5e1f998608b460458958b70cc",
+			"revisionTime": "2017-12-19T00:03:56Z"
+		},
+		{
+			"checksumSHA1": "KrIRJ4p3nRze4NcxfgX5+N9+D1M=",
+			"path": "github.com/go-kit/kit/log",
+			"revision": "953e747656a7bbb5e1f998608b460458958b70cc",
+			"revisionTime": "2017-12-19T00:03:56Z"
+		},
+		{
+			"checksumSHA1": "qVNlGKkuj56lWYtY+4wHYmNcdZU=",
+			"path": "github.com/go-kit/kit/transport/http",
+			"revision": "953e747656a7bbb5e1f998608b460458958b70cc",
+			"revisionTime": "2017-12-19T00:03:56Z"
+		},
+		{
+			"checksumSHA1": "KxX/Drph+byPXBFIXaCZaCOAnrU=",
+			"path": "github.com/go-logfmt/logfmt",
+			"revision": "390ab7935ee28ec6b286364bba9b4dd6410cb3d5",
+			"revisionTime": "2016-11-15T14:25:13Z"
+		},
+		{
+			"checksumSHA1": "j6vhe49MX+dyHR9rU91P6vMx55o=",
+			"path": "github.com/go-stack/stack",
+			"revision": "817915b46b97fd7bb80e8ab6b69f01a53ac3eebf",
+			"revisionTime": "2017-07-24T01:23:01Z"
+		},
+		{
+			"checksumSHA1": "Yv6yVl0SuN0TnlKnZN1HcD6AbVA=",
+			"path": "github.com/google/go-cmp/cmp",
+			"revision": "97aa668b73e764ccdd786bc3ccd2edffe621150e",
+			"revisionTime": "2018-01-03T21:20:46Z"
+		},
+		{
+			"checksumSHA1": "oLBV7th4sxzxzmf1b91NVVbdOfI=",
+			"path": "github.com/google/go-cmp/cmp/internal/diff",
+			"revision": "97aa668b73e764ccdd786bc3ccd2edffe621150e",
+			"revisionTime": "2018-01-03T21:20:46Z"
+		},
+		{
+			"checksumSHA1": "kYtvRhMjM0X4bvEjR3pqEHLw1qo=",
+			"path": "github.com/google/go-cmp/cmp/internal/function",
+			"revision": "97aa668b73e764ccdd786bc3ccd2edffe621150e",
+			"revisionTime": "2018-01-03T21:20:46Z"
+		},
+		{
+			"checksumSHA1": "u8N4n7/rhyUgsVYUiHG2IvCo3kA=",
+			"path": "github.com/google/go-cmp/cmp/internal/value",
+			"revision": "97aa668b73e764ccdd786bc3ccd2edffe621150e",
+			"revisionTime": "2018-01-03T21:20:46Z"
+		},
+		{
+			"checksumSHA1": "abKzFXAn0KDr5U+JON1ZgJ2lUtU=",
+			"path": "github.com/kr/logfmt",
+			"revision": "b84e30acd515aadc4b783ad4ff83aff3299bdfe0",
+			"revisionTime": "2014-02-26T03:06:59Z"
+		},
+		{
+			"checksumSHA1": "xCv4GBFyw07vZkVtKF/XrUnkHRk=",
+			"path": "github.com/pkg/errors",
+			"revision": "e881fd58d78e04cf6d0de1217f8707c8cc2249bc",
+			"revisionTime": "2017-12-16T07:03:16Z"
+		}
+	],
+	"rootPath": "github.com/mateuszkrasucki/calculator"
+}
