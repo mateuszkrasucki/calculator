@@ -27,7 +27,7 @@ run/server: build/server ## Run server executable
 run/cli: build/cli ## Run cli executable
 	./build/cli
 
-qa: test/unit test/static ## Run entire QA suite
+qa: mock/build test/unit test/static ## Run entire QA suite
 
 test/unit: ## Run unit tests
 	go test -v $(shell $(PKG_LIST_CMD))
@@ -43,6 +43,12 @@ test/lint: ## Lint the source code
 test/vet: ## Vet the source code
 	go vet $(shell $(PKG_LIST_CMD))
 
+mock/build: mock/clean
+	@./generate_mocks.sh
+
+mock/clean: ## Remove mocks
+	@/bin/bash -c 'find . -name "mock_*.go" -delete -o -name "mock.goconvey" -delete'
+
 docker/build/builder: ## Build a builder Docker image
 	docker build -t $(DOCKER_IMAGE):builder .
 
@@ -55,6 +61,13 @@ builder/%:: ## Run make target in builder container
 		-w /go/src/$(PROJECT_PACKAGE) \
 		-p 8080:8080 \
 		$(DOCKER_IMAGE):builder make $*;
+
+_installDeps:
+	@echo "##### Install go dependencies"
+	go get -u \
+		github.com/golang/lint/golint \
+		github.com/kardianos/govendor \
+		github.com/golang/mock/mockgen
 
 console: ## Run bash shell, i.e. builder/console
 	@bash
