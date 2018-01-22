@@ -10,6 +10,8 @@ import (
 
 	"github.com/go-kit/kit/log"
 	"github.com/google/go-cmp/cmp"
+
+	"github.com/mateuszkrasucki/calculator/pkg/errors"
 )
 
 func TestApi(t *testing.T) {
@@ -17,14 +19,14 @@ func TestApi(t *testing.T) {
 		req := request.(Request)
 
 		switch req.Operation {
-		case InputError:
-			return nil, NewCalculatorError(InputError, InputError)
-		case ParsingError:
-			return nil, NewCalculatorError(ParsingError, ParsingError)
-		case CalculationError:
-			return nil, NewCalculatorError(CalculationError, CalculationError)
-		case EncodingError:
-			return nil, NewCalculatorError(EncodingError, EncodingError)
+		case errors.InputError:
+			return nil, errors.NewInputError(errors.InputError)
+		case errors.ParsingError:
+			return nil, errors.NewParsingError(errors.ParsingError)
+		case errors.CalculationError:
+			return nil, errors.NewCalculationError(errors.CalculationError)
+		case errors.EncodingError:
+			return nil, errors.NewEncodingError(errors.EncodingError)
 		}
 
 		return Response{
@@ -57,25 +59,25 @@ func TestApi(t *testing.T) {
 			"API InputError",
 			"{\"operation\": \"InputError\"}",
 			http.StatusBadRequest,
-			respBodyStruct{Error: InputError, ErrorDescription: InputError},
+			respBodyStruct{Error: errors.InputError, ErrorDescription: errors.InputError},
 		},
 		{
 			"API ParsingError",
 			"{\"operation\": \"ParsingError\"}",
 			http.StatusBadRequest,
-			respBodyStruct{Error: ParsingError, ErrorDescription: ParsingError},
+			respBodyStruct{Error: errors.ParsingError, ErrorDescription: errors.ParsingError},
 		},
 		{
 			"API CalculationError",
 			"{\"operation\": \"CalculationError\"}",
 			http.StatusInternalServerError,
-			respBodyStruct{Error: CalculationError, ErrorDescription: CalculationError},
+			respBodyStruct{Error: errors.CalculationError, ErrorDescription: errors.CalculationError},
 		},
 		{
 			"API EncodingError",
 			"{\"operation\": \"EncodingError\"}",
 			http.StatusInternalServerError,
-			respBodyStruct{Error: EncodingError, ErrorDescription: EncodingError},
+			respBodyStruct{Error: errors.EncodingError, ErrorDescription: errors.EncodingError},
 		},
 	}
 

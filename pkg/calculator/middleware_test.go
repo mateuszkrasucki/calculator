@@ -5,6 +5,8 @@ import (
 	"testing"
 
 	"github.com/golang/mock/gomock"
+
+	"github.com/mateuszkrasucki/calculator/pkg/errors"
 )
 
 func TestValidationMiddleware(t *testing.T) {
@@ -37,9 +39,9 @@ func TestValidationMiddleware(t *testing.T) {
 			"2+2",
 			1,
 			0.0,
-			NewCalculatorError(CalculationError, CalculationError),
+			errors.NewCalculationError(""),
 			0.0,
-			NewCalculatorError(CalculationError, CalculationError),
+			errors.NewCalculationError(""),
 		},
 		{
 			"Successful validation, instant result from empty input",
@@ -57,7 +59,7 @@ func TestValidationMiddleware(t *testing.T) {
 			0.0,
 			nil,
 			0.0,
-			NewCalculatorError(InputError, InputError),
+			errors.NewInputError(""),
 		},
 	}
 

@@ -11,6 +11,8 @@ import (
 	"github.com/go-kit/kit/endpoint"
 	"github.com/go-kit/kit/log"
 	httptransport "github.com/go-kit/kit/transport/http"
+
+	"github.com/mateuszkrasucki/calculator/pkg/errors"
 )
 
 func decodeFormParamRequest(ctx context.Context, r *http.Request) (interface{}, error) {
@@ -23,7 +25,7 @@ func decodeFormParamRequest(ctx context.Context, r *http.Request) (interface{}, 
 
 func decodeJSONRequest(_ context.Context, r *http.Request) (interface{}, error) {
 	if r.Body == nil {
-		return nil, NewCalculatorError(InputError, "Body cannot be empty")
+		return nil, errors.NewInputError("Body cannot be empty")
 	}
 
 	decoder := json.NewDecoder(r.Body)
@@ -32,7 +34,7 @@ func decodeJSONRequest(_ context.Context, r *http.Request) (interface{}, error) 
 
 	err := decoder.Decode(&request)
 	if err != nil {
-		return nil, NewWrappedCalculatorError(err, InputError, err.Error())
+		return nil, errors.NewInputErrorWrap(err, "Failed to decode JSON")
 	}
 
 	return request, nil
@@ -46,7 +48,7 @@ func encodePlainResponse(_ context.Context, w http.ResponseWriter, response inte
 
 	_, err := fmt.Fprint(w, result)
 	if err != nil {
-		return NewWrappedCalculatorError(err, EncodingError, err.Error())
+		return errors.NewEncodingErrorWrap(err, "Failed to write response")
 	}
 	return nil
 }
@@ -58,7 +60,7 @@ func encodeJSONResponse(_ context.Context, w http.ResponseWriter, response inter
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
 	err := json.NewEncoder(w).Encode(jsonResp)
 	if err != nil {
-		return NewWrappedCalculatorError(err, EncodingError, err.Error())
+		return errors.NewEncodingErrorWrap(err, "Failed to encode response")
 	}
 	return nil
 }
@@ -75,7 +77,7 @@ func encodeHTMLResponse(_ context.Context, w http.ResponseWriter, response inter
 
 	t, err := template.New("form").Parse(tmpl)
 	if err != nil {
-		return NewWrappedCalculatorError(err, EncodingError, err.Error())
+		return errors.NewEncodingErrorWrap(err, "Failed to parse response template")
 	}
 
 	t.Execute(w, resp)

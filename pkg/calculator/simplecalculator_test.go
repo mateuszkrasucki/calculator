@@ -6,6 +6,8 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+
+	"github.com/mateuszkrasucki/calculator/pkg/errors"
 )
 
 func TestSimpleParse(t *testing.T) {
@@ -59,37 +61,37 @@ func TestSimpleParse(t *testing.T) {
 			"Error ++",
 			"3++2",
 			nil,
-			NewCalculatorError(ParsingError, ""),
+			errors.NewParsingError(""),
 		},
 		{
 			"Error + - *",
 			"3+2-3*4",
 			nil,
-			NewCalculatorError(ParsingError, ""),
+			errors.NewParsingError(""),
 		},
 		{
 			"Error no operand",
 			"3",
 			nil,
-			NewCalculatorError(ParsingError, ""),
+			errors.NewParsingError(""),
 		},
 		{
 			"Cannot parse first number #1",
 			"aa*2",
 			nil,
-			NewCalculatorError(ParsingError, ""),
+			errors.NewParsingError(""),
 		},
 		{
 			"Cannot parse first number #2",
 			"aa+bb",
 			nil,
-			NewCalculatorError(ParsingError, ""),
+			errors.NewParsingError(""),
 		},
 		{
 			"Cannot parse second number",
 			"2+bb",
 			nil,
-			NewCalculatorError(ParsingError, ""),
+			errors.NewParsingError(""),
 		},
 	}
 
@@ -171,7 +173,7 @@ func TestSimpleOperationCalculate(t *testing.T) {
 				operand: "++",
 			},
 			0,
-			NewCalculatorError(CalculationError, ""),
+			errors.NewCalculationError(""),
 		},
 		{
 			"Error no operand",
@@ -181,7 +183,7 @@ func TestSimpleOperationCalculate(t *testing.T) {
 				operand: "",
 			},
 			0,
-			NewCalculatorError(CalculationError, ""),
+			errors.NewCalculationError(""),
 		},
 	}
 

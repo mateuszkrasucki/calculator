@@ -8,6 +8,8 @@ import (
 
 	"github.com/go-kit/kit/endpoint"
 	"github.com/go-kit/kit/log"
+
+	"github.com/mateuszkrasucki/calculator/pkg/errors"
 )
 
 // Middleware type
@@ -27,11 +29,11 @@ type validateMiddleware struct {
 func (mw validateMiddleware) Calculate(ctx context.Context, input string) (float64, error) {
 	matched, err := regexp.MatchString("^[0-9+\\-*\\/\\.]*$", input)
 	if err != nil {
-		return 0, NewWrappedCalculatorError(err, InternalError, "Validation regex failure")
+		return 0, errors.NewCalcErrorWrap(err, "Validation regex failure")
 	}
 
 	if matched == false {
-		return 0, NewCalculatorError(InputError, "Invalid characters in input string")
+		return 0, errors.NewInputError("Invalid characters in input string")
 	}
 
 	if strings.TrimSpace(input) == "" {

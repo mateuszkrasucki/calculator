@@ -2,9 +2,10 @@ package calculator
 
 import (
 	"bufio"
-	"errors"
 	"flag"
 	"os"
+
+	"github.com/pkg/errors"
 )
 
 // GetInput reads input from Stdin and if not available tries to read from execution flag

@@ -5,6 +5,8 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/mateuszkrasucki/calculator/pkg/errors"
 )
 
 type simpleOperation struct {
@@ -18,11 +20,11 @@ func SimpleParse(_ context.Context, input string) (operation OperationInterface,
 	matched, err := regexp.MatchString(".*[\\+\\-\\/\\*]+.*[\\+\\-\\/\\*]+.*", input)
 
 	if err != nil {
-		return nil, NewWrappedCalculatorError(err, InternalError, "Validation regex failure")
+		return nil, errors.NewCalcErrorWrap(err, "Validation regex failure")
 	}
 
 	if matched {
-		return nil, NewCalculatorError(ParsingError, "Operation contains more than one operation sign")
+		return nil, errors.NewParsingError("Operation contains more than one operation sign")
 	}
 
 	var operand string
@@ -44,15 +46,15 @@ func SimpleParse(_ context.Context, input string) (operation OperationInterface,
 		operand = "/"
 		args = strings.Split(input, "/")
 	default:
-		return nil, NewCalculatorError(ParsingError, "Operation does not contain operation sign")
+		return nil, errors.NewParsingError("Operation does not contain operation sign")
 	}
 
 	if arg1, err = strconv.ParseFloat(args[0], 64); err != nil {
-		return nil, NewWrappedCalculatorError(err, ParsingError, "First operation argument could not be parsed to number")
+		return nil, errors.NewParsingErrorWrap(err, "First operation argument could not be parsed to number")
 	}
 
 	if arg2, err = strconv.ParseFloat(args[1], 64); err != nil {
-		return nil, NewWrappedCalculatorError(err, ParsingError, "Second operation argument could not be parsed to number")
+		return nil, errors.NewParsingErrorWrap(err, "Second operation argument could not be parsed to number")
 	}
 
 	return &simpleOperation{arg1: arg1, arg2: arg2, operand: operand}, nil
@@ -69,6 +71,6 @@ func (operation simpleOperation) calculate(_ context.Context) (result float64, e
 	case "/":
 		return operation.arg1 / operation.arg2, nil
 	default:
-		return 0, NewCalculatorError(CalculationError, "Calculation error")
+		return 0, errors.NewCalculationError("Calculation error")
 	}
 }

@@ -2,9 +2,10 @@ package calculator
 
 import (
 	"context"
-	"errors"
 	"strings"
 	"testing"
+
+	"github.com/mateuszkrasucki/calculator/pkg/errors"
 )
 
 type mockOperation struct {
@@ -12,8 +13,8 @@ type mockOperation struct {
 }
 
 func (o mockOperation) calculate(_ context.Context) (result float64, err error) {
-	if o.Operation == CalculationError {
-		return 0, errors.New(CalculationError)
+	if o.Operation == errors.CalculationError {
+		return 0, errors.NewCalculationError(errors.CalculationError)
 	}
 
 	return float64(len(o.Operation)), nil
@@ -24,7 +25,7 @@ func mockParser(_ context.Context, operation string) (OperationInterface, error)
 }
 
 func mockParserError(_ context.Context, operation string) (OperationInterface, error) {
-	return nil, errors.New(operation)
+	return nil, errors.NewParsingError(operation)
 }
 
 func TestCalculate(t *testing.T) {
@@ -44,9 +45,9 @@ func TestCalculate(t *testing.T) {
 		},
 		{
 			"Error",
-			CalculationError,
+			errors.CalculationError,
 			0,
-			NewCalculatorError(CalculationError, ""),
+			errors.NewCalculationError(""),
 		},
 	}
 
@@ -70,7 +71,7 @@ func TestCalculate(t *testing.T) {
 }
 
 func TestParsingError(t *testing.T) {
-	expectedError := errors.New("operation")
+	expectedError := errors.NewParsingError("operation")
 	expectedResult := 0.0
 
 	c := New(mockParserError)
