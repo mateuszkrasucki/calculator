@@ -8,7 +8,6 @@ import (
 
 	"github.com/go-kit/kit/endpoint"
 	"github.com/go-kit/kit/log"
-
 	"github.com/mateuszkrasucki/calculator/pkg/errors"
 )
 

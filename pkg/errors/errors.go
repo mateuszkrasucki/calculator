@@ -2,6 +2,7 @@ package errors
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	pkgerrors "github.com/pkg/errors"
@@ -37,7 +38,7 @@ func NewCalcError(description string) error {
 
 func newCalcErrorCategorized(category string, description string) error {
 	return calcError{
-		pkgerrors.New(category),
+		pkgerrors.New(fmt.Sprintf("%s: %s", category, description)),
 		category,
 		description,
 	}
@@ -50,7 +51,7 @@ func NewCalcErrorWrap(err error, description string) error {
 
 func newCalcErrorWrapCategorized(err error, category string, description string) error {
 	return calcError{
-		pkgerrors.Wrap(err, category),
+		pkgerrors.Wrap(err, fmt.Sprintf("%s: %s", category, description)),
 		category,
 		description,
 	}

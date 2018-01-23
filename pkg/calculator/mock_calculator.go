@@ -33,17 +33,17 @@ func (m *MockOperationInterface) EXPECT() *MockOperationInterfaceMockRecorder {
 	return m.recorder
 }
 
-// calculate mocks base method
-func (m *MockOperationInterface) calculate(arg0 context.Context) (float64, error) {
-	ret := m.ctrl.Call(m, "calculate", arg0)
+// Calculate mocks base method
+func (m *MockOperationInterface) Calculate(arg0 context.Context) (float64, error) {
+	ret := m.ctrl.Call(m, "Calculate", arg0)
 	ret0, _ := ret[0].(float64)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// calculate indicates an expected call of calculate
-func (mr *MockOperationInterfaceMockRecorder) calculate(arg0 interface{}) *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "calculate", reflect.TypeOf((*MockOperationInterface)(nil).calculate), arg0)
+// Calculate indicates an expected call of Calculate
+func (mr *MockOperationInterfaceMockRecorder) Calculate(arg0 interface{}) *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Calculate", reflect.TypeOf((*MockOperationInterface)(nil).Calculate), arg0)
 }
 
 // MockCalculator is a mock of Calculator interface

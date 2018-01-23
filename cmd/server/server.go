@@ -7,7 +7,8 @@ import (
 
 	"github.com/go-kit/kit/log"
 
-	"github.com/mateuszkrasucki/calculator/pkg/calculator"
+	calculator "github.com/mateuszkrasucki/calculator/pkg/calculator"
+	simplecalculator "github.com/mateuszkrasucki/calculator/pkg/simplecalculator"
 )
 
 func main() {
@@ -25,7 +26,7 @@ func main() {
 	// Create calculator service
 	var c calculator.Calculator
 	{
-		c = calculator.New(calculator.SimpleParse)
+		c = calculator.New(simplecalculator.Parse)
 		c = calculator.ServiceLoggingMiddleware(logger)(c)
 		c = calculator.ValidateMiddleware()(c)
 	}

@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/mateuszkrasucki/calculator/pkg/calculator"
 	"github.com/mateuszkrasucki/calculator/pkg/errors"
 )
 
@@ -15,8 +16,8 @@ type simpleOperation struct {
 	operand string
 }
 
-// SimpleParse provides parsing for simple two argument, one operand mathematical operations
-func SimpleParse(_ context.Context, input string) (operation OperationInterface, err error) {
+// Parse provides parsing for simple two argument, one operand mathematical operations
+func Parse(_ context.Context, input string) (calculator.OperationInterface, error) {
 	matched, err := regexp.MatchString(".*[\\+\\-\\/\\*]+.*[\\+\\-\\/\\*]+.*", input)
 
 	if err != nil {
@@ -60,7 +61,7 @@ func SimpleParse(_ context.Context, input string) (operation OperationInterface,
 	return &simpleOperation{arg1: arg1, arg2: arg2, operand: operand}, nil
 }
 
-func (operation simpleOperation) calculate(_ context.Context) (result float64, err error) {
+func (operation *simpleOperation) Calculate(_ context.Context) (result float64, err error) {
 	switch operation.operand {
 	case "+":
 		return operation.arg1 + operation.arg2, nil

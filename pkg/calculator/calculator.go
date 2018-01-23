@@ -6,7 +6,7 @@ import (
 
 // OperationInterface represents parsed mathematical operation that can be calculated
 type OperationInterface interface {
-	calculate(context.Context) (float64, error)
+	Calculate(context.Context) (float64, error)
 }
 
 type parser func(context.Context, string) (OperationInterface, error)
@@ -32,6 +32,6 @@ func (c calculator) Calculate(ctx context.Context, input string) (result float64
 		return 0, err
 	}
 
-	res, err := operation.calculate(ctx)
+	res, err := operation.Calculate(ctx)
 	return res, err
 }

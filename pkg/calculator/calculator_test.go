@@ -12,7 +12,7 @@ type mockOperation struct {
 	Operation string
 }
 
-func (o mockOperation) calculate(_ context.Context) (result float64, err error) {
+func (o *mockOperation) Calculate(_ context.Context) (result float64, err error) {
 	if o.Operation == errors.CalculationError {
 		return 0, errors.NewCalculationError(errors.CalculationError)
 	}

@@ -97,7 +97,7 @@ func TestSimpleParse(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			operation, err := SimpleParse(context.Background(), tt.operation)
+			operation, err := Parse(context.Background(), tt.operation)
 
 			if (tt.expectedError != nil && err == nil) || (tt.expectedError == nil && err != nil) {
 				t.Errorf("expected error to be %v, got %v", tt.expectedError, err)
@@ -189,7 +189,7 @@ func TestSimpleOperationCalculate(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result, err := tt.operation.calculate(context.Background())
+			result, err := tt.operation.Calculate(context.Background())
 
 			if (tt.expectedError != nil && err == nil) || (tt.expectedError == nil && err != nil) {
 				t.Fatalf("expected error to be %v, got %v", tt.expectedError, err)
