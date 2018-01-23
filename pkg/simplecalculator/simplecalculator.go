@@ -11,12 +11,12 @@ import (
 )
 
 type simpleOperation struct {
-	arg1    float64
-	arg2    float64
-	operand string
+	arg1     float64
+	arg2     float64
+	operator string
 }
 
-// Parse provides parsing for simple two argument, one operand mathematical operations
+// Parse provides parsing for simple two argument, one operator mathematical operations
 func Parse(_ context.Context, input string) (calculator.OperationInterface, error) {
 	matched, err := regexp.MatchString(".*[\\+\\-\\/\\*]+.*[\\+\\-\\/\\*]+.*", input)
 
@@ -28,23 +28,23 @@ func Parse(_ context.Context, input string) (calculator.OperationInterface, erro
 		return nil, errors.NewParsingError("Operation contains more than one operation sign")
 	}
 
-	var operand string
+	var operator string
 	var args []string
 	var arg1 float64
 	var arg2 float64
 
 	switch {
 	case strings.Contains(input, "+"):
-		operand = "+"
+		operator = "+"
 		args = strings.Split(input, "+")
 	case strings.Contains(input, "*"):
-		operand = "*"
+		operator = "*"
 		args = strings.Split(input, "*")
 	case strings.Contains(input, "-"):
-		operand = "-"
+		operator = "-"
 		args = strings.Split(input, "-")
 	case strings.Contains(input, "/"):
-		operand = "/"
+		operator = "/"
 		args = strings.Split(input, "/")
 	default:
 		return nil, errors.NewParsingError("Operation does not contain operation sign")
@@ -58,11 +58,11 @@ func Parse(_ context.Context, input string) (calculator.OperationInterface, erro
 		return nil, errors.NewParsingErrorWrap(err, "Second operation argument could not be parsed to number")
 	}
 
-	return &simpleOperation{arg1: arg1, arg2: arg2, operand: operand}, nil
+	return &simpleOperation{arg1: arg1, arg2: arg2, operator: operator}, nil
 }
 
 func (operation *simpleOperation) Calculate(_ context.Context) (result float64, err error) {
-	switch operation.operand {
+	switch operation.operator {
 	case "+":
 		return operation.arg1 + operation.arg2, nil
 	case "*":
