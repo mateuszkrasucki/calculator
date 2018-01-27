@@ -59,7 +59,7 @@ func TestValidationMiddleware(t *testing.T) {
 			0.0,
 			nil,
 			0.0,
-			errors.NewInputError(""),
+			errors.NewInputError("Invalid characters in input string"),
 		},
 	}
 
