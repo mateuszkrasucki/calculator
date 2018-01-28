@@ -1,4 +1,4 @@
-package calculator
+package simplecalculator
 
 import (
 	"context"
@@ -24,6 +24,16 @@ func TestSimpleParse(t *testing.T) {
 				arg1:     2,
 				arg2:     3.1,
 				operator: "+",
+			},
+			nil,
+		},
+		{
+			"Success ^",
+			"2^3",
+			&simpleOperation{
+				arg1:     2.0,
+				arg2:     3.0,
+				operator: "^",
 			},
 			nil,
 		},
@@ -133,6 +143,16 @@ func TestSimpleOperationCalculate(t *testing.T) {
 				operator: "+",
 			},
 			2.0 + 3.1,
+			nil,
+		},
+		{
+			"Success ^",
+			simpleOperation{
+				arg1:     2.0,
+				arg2:     3.0,
+				operator: "^",
+			},
+			8.0,
 			nil,
 		},
 		{

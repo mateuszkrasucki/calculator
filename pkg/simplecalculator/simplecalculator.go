@@ -1,7 +1,8 @@
-package calculator
+package simplecalculator
 
 import (
 	"context"
+	"math"
 	"regexp"
 	"strconv"
 	"strings"
@@ -16,9 +17,14 @@ type simpleOperation struct {
 	operator string
 }
 
+// NewOperation returns pointer to simples calculator implementation of OperationInterface
+func NewOperation(operator string, arg1 float64, arg2 float64) calculator.OperationInterface {
+	return &simpleOperation{arg1: arg1, arg2: arg2, operator: operator}
+}
+
 // Parse provides parsing for simple two argument, one operator mathematical operations
 func Parse(_ context.Context, input string) (calculator.OperationInterface, error) {
-	matched, err := regexp.MatchString(".*[\\+\\-\\/\\*]+.*[\\+\\-\\/\\*]+.*", input)
+	matched, err := regexp.MatchString(".*[\\^\\+\\-\\/\\*]+.*[\\^\\+\\-\\/\\*]+.*", input)
 
 	if err != nil {
 		return nil, errors.NewCalcErrorWrap(err, "Validation regex failure")
@@ -46,6 +52,9 @@ func Parse(_ context.Context, input string) (calculator.OperationInterface, erro
 	case strings.Contains(input, "/"):
 		operator = "/"
 		args = strings.Split(input, "/")
+	case strings.Contains(input, "^"):
+		operator = "^"
+		args = strings.Split(input, "^")
 	default:
 		return nil, errors.NewParsingError("Operation does not contain operation sign")
 	}
@@ -71,6 +80,8 @@ func (operation *simpleOperation) Calculate(_ context.Context) (result float64, 
 		return operation.arg1 - operation.arg2, nil
 	case "/":
 		return operation.arg1 / operation.arg2, nil
+	case "^":
+		return math.Pow(operation.arg1, operation.arg2), nil
 	default:
 		return 0, errors.NewCalculationError("Calculation error")
 	}
