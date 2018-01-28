@@ -26,7 +26,7 @@ type validateMiddleware struct {
 }
 
 func (mw validateMiddleware) Calculate(ctx context.Context, input string) (float64, error) {
-	matched, err := regexp.MatchString("^[0-9+\\-*\\/\\.]*$", input)
+	matched, err := regexp.MatchString("^[ 0-9+\\(\\)\\^\\-*\\/\\.]*$", input)
 	if err != nil {
 		return 0, errors.NewCalcErrorWrap(err, "Validation regex failure")
 	}

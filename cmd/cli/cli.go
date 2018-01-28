@@ -10,7 +10,7 @@ import (
 	"github.com/pkg/errors"
 
 	calculator "github.com/mateuszkrasucki/calculator/pkg/calculator"
-	simplecalculator "github.com/mateuszkrasucki/calculator/pkg/simplecalculator"
+	rpn "github.com/mateuszkrasucki/calculator/pkg/reversepolish"
 )
 
 func getInput() string {
@@ -55,7 +55,7 @@ func readFlag() (string, error) {
 func main() {
 	var c calculator.Calculator
 	{
-		c = calculator.New(simplecalculator.Parse)
+		c = calculator.New(rpn.ParseInfix)
 		c = calculator.ValidateMiddleware()(c)
 	}
 
